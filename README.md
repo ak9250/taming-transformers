@@ -12,6 +12,13 @@
 ![teaser](assets/teaser.png)
 [arXiv](https://arxiv.org/abs/2012.09841) | [BibTeX](#bibtex) | [Project Page](https://compvis.github.io/taming-transformers/)
 
+### News
+
+- We now include a couple of examples from the D-RIN dataset so you can run the
+  [D-RIN demo](#d-rin) without preparing the dataset first.
+- You can now jump right into sampling with our [Colab quickstart notebook](https://colab.research.google.com/github/CompVis/taming-transformers/blob/master/scripts/taming-transformers.ipynb).
+- Take a look at [ak9250's notebook](https://github.com/ak9250/taming-transformers/blob/master/tamingtransformerscolab.ipynb) if you want to run the streamlit demos on Colab.
+
 ## Requirements
 A suitable [conda](https://conda.io/) environment named `taming` can be created
 and activated with:
@@ -25,6 +32,10 @@ conda activate taming
 
 ### S-FLCKR
 ![teaser](assets/sunset_and_ocean.jpg)
+
+You can also [run this model in a Colab
+notebook](https://colab.research.google.com/github/CompVis/taming-transformers/blob/master/scripts/taming-transformers.ipynb),
+which includes all necessary steps to start sampling.
 
 Download the
 [2020-11-09T13-31-51_sflckr](https://heibox.uni-heidelberg.de/d/73487ab6e5314cb5adba/)
@@ -47,8 +58,15 @@ streamlit run scripts/sample_conditional.py -- -r logs/2020-11-13T21-41-45_faces
 ![teaser](assets/drin.jpg)
 
 Download [2020-11-20T12-54-32_drin_transformer](https://k00.fr/39jcugc5) and
-place it into `logs`. Follow the data preparation steps for
-[ImageNet](#imagenet). Run
+place it into `logs`. To run the demo on a couple of example depth maps
+included in the repository, run
+
+```
+streamlit run scripts/sample_conditional.py -- -r logs/2020-11-20T12-54-32_drin_transformer/ --ignore_base_data data="{target: main.DataModuleFromConfig, params: {batch_size: 1, validation: {target: taming.data.imagenet.DRINExamples}}}"
+```
+
+To run the demo on the complete validation set, first follow the data preparation steps for
+[ImageNet](#imagenet) and then run
 ```
 streamlit run scripts/sample_conditional.py -- -r logs/2020-11-20T12-54-32_drin_transformer/
 ```
