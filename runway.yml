@@ -1,0 +1,16 @@
+entrypoint: python runway_model.py
+python: 3.6
+cuda: 9.2
+spec:
+  gpu: True
+  cpu: False
+build_steps:
+  - apt-get update
+  - apt-get install -y libboost-all-dev wget
+  - apt-get install -y cmake
+  - apt-get install ffmpeg libsm6 libxext6  -y
+  - mkdir -p logs/2020-11-09T13-31-51_sflckr/checkpoints
+  - wget 'https://heibox.uni-heidelberg.de/d/73487ab6e5314cb5adba/files/?p=%2Fcheckpoints%2Flast.ckpt&dl=1' -O 'logs/2020-11-09T13-31-51_sflckr/checkpoints/last.ckpt'
+  - mkdir logs/2020-11-09T13-31-51_sflckr/configs
+  - wget 'https://heibox.uni-heidelberg.de/d/73487ab6e5314cb5adba/files/?p=%2Fconfigs%2F2020-11-09T13-31-51-project.yaml&dl=1' -O 'logs/2020-11-09T13-31-51_sflckr/configs/2020-11-09T13-31-51-project.yaml'
+  - pip install runway-python torch==1.7.0 torchvision==0.8.1 numpy==1.19.2 albumentations==0.4.3 opencv-python==4.1.2.30 pudb==2019.2 imageio==2.9.0 imageio-ffmpeg==0.4.2 pytorch-lightning==1.0.8 omegaconf==2.0.0 test-tube>=0.7.5
