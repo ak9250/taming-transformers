@@ -22,7 +22,7 @@ import time
 
     
 
-@runway.command('imitate', inputs={'source': runway.image, 'target': runway.image}, outputs={'image': runway.image})
+@runway.command('imitate', inputs={'source': runway.image}, outputs={'image': runway.image})
 def imitate(models, inputs):
     segmentation = inputs['source']
     segmentation = np.array(segmentation)
