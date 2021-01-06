@@ -24,7 +24,6 @@ def setup(opts):
     ckpt_path = os.path.join(opts['checkpoint_dir'], 'logs/2020-11-09T13-31-51_sflckr/checkpoints/')
     sd = torch.load(ckpt_path, map_location="cpu")["state_dict"]
     missing, unexpected = model.load_state_dict(sd, strict=False)
-    model.cuda().eval()
     torch.set_grad_enabled(False)
     return model
 
