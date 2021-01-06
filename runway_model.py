@@ -98,7 +98,6 @@ def imitate(model, inputs):
         if step%update_every==0 or step==z_code_shape[2]*z_code_shape[3]-1:
         x_sample = model.decode_to_img(idx, z_code_shape)
         print(f"Time: {time.time() - start_t} seconds")
-        print(f"Step: ({i},{j}) | Local: ({local_i},{local_j}) | Crop: ({i_start}:{i_end},{j_start}:{j_end})")
   return x_sample
 
 
