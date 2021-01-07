@@ -2,7 +2,6 @@ import runway
 import sys
 sys.path.append(".")
 from omegaconf import OmegaConf
-
 import yaml
 from taming.models.cond_transformer import Net2NetTransformer
 
