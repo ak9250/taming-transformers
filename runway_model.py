@@ -1,5 +1,4 @@
 import runway
-import numpy as np
 import sys
 sys.path.append(".")
 from omegaconf import OmegaConf
