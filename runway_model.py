@@ -19,14 +19,14 @@ def setup(opts):
     torch.set_grad_enabled(False)
     return model
 
-@runway.command('imitate', inputs={'source': runway.image}, outputs={'image': runway.image})
+@runway.command('imitate', inputs={"segmentation_map": segmentation(label_to_id={"background": 0, "foreground": 1})}, outputs={'image': runway.image})
 def imitate(model, inputs):
     os.makedirs('images', exist_ok=True)
     inputs['source'].save('images/temp.jpg')
     segmentation_path = os.path.join('images','temp.jpg')
     segmentation = Image.open(segmentation_path)
     segmentation = np.array(segmentation)
-    segmentation = np.eye(186)[segmentation]
+    segmentation = np.eye(182)[segmentation]
     segmentation = torch.tensor(segmentation.transpose(2,0,1)[None]).to(dtype=torch.float32, device=model.device)
 
     c_code, c_indices = model.encode_to_c(segmentation)
