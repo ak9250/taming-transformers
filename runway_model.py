@@ -26,7 +26,7 @@ def imitate(model, inputs):
     segmentation_path = os.path.join('images','temp.jpg')
     segmentation = Image.open(segmentation_path)
     segmentation = np.array(segmentation)
-    segmentation = np.eye(183)[segmentation]
+    segmentation = np.eye(185)[segmentation]
     segmentation = torch.tensor(segmentation.transpose(2,0,1)[None]).to(dtype=torch.float32, device=model.device)
 
     c_code, c_indices = model.encode_to_c(segmentation)
