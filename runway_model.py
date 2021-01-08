@@ -12,13 +12,14 @@ import numpy as np
 
 import time
 
-config_path = "logs/2020-11-09T13-31-51_sflckr/configs/2020-11-09T13-31-51-project.yaml"
-config = OmegaConf.load(config_path)
-model = Net2NetTransformer(**config.model.params)
+
 
 
 @runway.setup(options={'checkpoint_dir': runway.directory(description="runs folder") ,})
 def setup(opts):
+    config_path = os.path.join(opts['checkpoint_dir'], 'logs/2020-11-09T13-31-51_sflckr/configs/')
+    config = OmegaConf.load(config_path)
+    model = Net2NetTransformer(**config.model.params)
     ckpt_path = os.path.join(opts['checkpoint_dir'], 'logs/2020-11-09T13-31-51_sflckr/checkpoints/')
     sd = torch.load(ckpt_path, map_location="cpu")["state_dict"]
     missing, unexpected = model.load_state_dict(sd, strict=False)
