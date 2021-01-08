@@ -8,6 +8,7 @@ import torch
 from PIL import Image
 import numpy as np
 import time
+import os
 
 @runway.setup(options={'config': runway.file(extension=".yaml"), 'checkpoint': runway.file(extension=".ckpt") ,})
 def setup(opts):
@@ -20,7 +21,10 @@ def setup(opts):
 
 @runway.command('imitate', inputs={'source': runway.image}, outputs={'image': runway.image})
 def imitate(model, inputs):
-    segmentation = inputs['source']
+    os.makedirs('images', exist_ok=True)
+    inputs['source'].save('images/temp.jpg')
+    segmentation_path = os.path.join('images','temp.jpg')
+    segmentation = Image.open(segmentation_path)
     segmentation = np.array(segmentation)
     segmentation = np.eye(182)[segmentation]
     segmentation = torch.tensor(segmentation.transpose(2,0,1)[None]).to(dtype=torch.float32, device=model.device)
