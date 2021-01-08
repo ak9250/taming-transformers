@@ -4,12 +4,9 @@ sys.path.append(".")
 from omegaconf import OmegaConf
 import yaml
 from taming.models.cond_transformer import Net2NetTransformer
-
 import torch
-
 from PIL import Image
 import numpy as np
-
 import time
 
 @runway.setup(options={'config': runway.file(extension=".yaml"), 'checkpoint': runway.file(extension=".ckpt") ,})
