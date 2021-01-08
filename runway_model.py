@@ -12,9 +12,6 @@ import numpy as np
 
 import time
 
-
-
-
 @runway.setup(options={'config': runway.file(extension=".yaml"), 'checkpoint': runway.file(extension=".ckpt") ,})
 def setup(opts):
     config = OmegaConf.load(opts['config'])
