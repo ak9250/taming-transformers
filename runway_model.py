@@ -19,7 +19,7 @@ def setup(opts):
     torch.set_grad_enabled(False)
     return model
 
-@runway.command('imitate', inputs={"segmentation_map": runway.image(default_output_format='PNG')}, outputs={'image': runway.image})
+@runway.command('imitate', inputs={"source": runway.image(default_output_format='PNG')}, outputs={'image': runway.image})
 def imitate(model, inputs):
     os.makedirs('images', exist_ok=True)
     inputs['source'].save('images/temp.png')
