@@ -1,6 +1,4 @@
 import runway
-import sys
-sys.path.append(".")
 from omegaconf import OmegaConf
 import yaml
 from taming.models.cond_transformer import Net2NetTransformer
@@ -17,7 +15,7 @@ from taming.models.cond_transformer import Net2NetTransformer
 
 import torch
 
-config_path = "logs/2020-11-09T13-31-51_sflckr/configs/2020-11-09T13-31-51-project.yaml"
+config_path = "./logs/2020-11-09T13-31-51_sflckr/configs/2020-11-09T13-31-51-project.yaml"
 config = OmegaConf.load(config_path)
 
 def show_image(s):
