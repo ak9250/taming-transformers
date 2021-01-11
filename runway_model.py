@@ -30,7 +30,7 @@ def setup(opts):
     sd = torch.load(opts['checkpoint'], map_location="cpu")["state_dict"]
     missing, unexpected = model.load_state_dict(sd, strict=False)
     torch.set_grad_enabled(False)
-    return model
+    return model, config
 
 @runway.command('generate', inputs={"source": runway.image(default_output_format='PNG'),}, outputs={'image': runway.image})
 def generate(model, inputs):
