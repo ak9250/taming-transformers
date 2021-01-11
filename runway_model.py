@@ -17,20 +17,22 @@ from taming.models.cond_transformer import Net2NetTransformer
 
 import torch
 
+config_path = "logs/2020-11-09T13-31-51_sflckr/configs/2020-11-09T13-31-51-project.yaml"
+config = OmegaConf.load(config_path)
+
 def show_image(s):
   s = s.detach().cpu().numpy().transpose(0,2,3,1)[0]
   s = ((s+1.0)*127.5).clip(0,255).astype(np.uint8)
   s = Image.fromarray(s)
   return s
 
-@runway.setup(options={'config': runway.file(extension=".yaml"), 'checkpoint': runway.file(extension=".ckpt") ,})
+@runway.setup(options={'checkpoint': runway.file(extension=".ckpt") ,})
 def setup(opts):
-    config = OmegaConf.load(opts['config'])
     model = Net2NetTransformer(**config.model.params)
     sd = torch.load(opts['checkpoint'], map_location="cpu")["state_dict"]
     missing, unexpected = model.load_state_dict(sd, strict=False)
     torch.set_grad_enabled(False)
-    return model, config
+    return model
 
 @runway.command('generate', inputs={"source": runway.image(default_output_format='PNG'),}, outputs={'image': runway.image})
 def generate(model, inputs):
