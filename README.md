@@ -1,4 +1,7 @@
 # Taming Transformers for High-Resolution Image Synthesis
+
+[![Open in RunwayML Badge](https://open-app.runwayml.com/gh-badge.svg)](https://open-app.runwayml.com/?model=akhaliq/taming-transformers)
+
 ![teaser](assets/mountain.jpeg)
 
 [**Taming Transformers for High-Resolution Image Synthesis**](https://compvis.github.io/taming-transformers/)<br/>
