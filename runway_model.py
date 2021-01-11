@@ -23,16 +23,17 @@ def show_image(s):
   s = Image.fromarray(s)
   return s
 
+@runway.setup(options={'config': runway.file(extension=".yaml"), 'checkpoint': runway.file(extension=".ckpt") ,})
+def setup(opts):
+    config = OmegaConf.load(opts['config'])
+    model = Net2NetTransformer(**config.model.params)
+    sd = torch.load(opts['checkpoint'], map_location="cpu")["state_dict"]
+    missing, unexpected = model.load_state_dict(sd, strict=False)
+    torch.set_grad_enabled(False)
+    return model
+
 @runway.command('generate', inputs={"source": runway.image(default_output_format='PNG'),}, outputs={'image': runway.image})
 def generate(model, inputs):
-    config_path = "logs/2020-11-09T13-31-51_sflckr/configs/2020-11-09T13-31-51-project.yaml"
-    config = OmegaConf.load(config_path)
-    model = Net2NetTransformer(**config.model.params)
-    ckpt_path = "logs/2020-11-09T13-31-51_sflckr/checkpoints/last.ckpt"
-    sd = torch.load(ckpt_path, map_location="cpu")["state_dict"]
-    missing, unexpected = model.load_state_dict(sd, strict=False)
-    model.cuda().eval()
-    torch.set_grad_enabled(False)
     os.makedirs('images', exist_ok=True)
     inputs['source'].save('images/temp.png')
     segmentation_path = os.path.join('images','temp.png')
@@ -108,6 +109,6 @@ def generate(model, inputs):
         if step%update_every==0 or step==z_code_shape[2]*z_code_shape[3]-1:
           x_sample = model.decode_to_img(idx, z_code_shape)      
     return show_image(x_sample)
-    
+
 if __name__ == '__main__':
     runway.run(port=8889)
